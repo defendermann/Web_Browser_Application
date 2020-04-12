@@ -11,11 +11,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.Objects;
@@ -28,6 +31,7 @@ public class Home extends AppCompatActivity {
     WebView webView;
     Button enter;
     String text;
+    ProgressBar progressBar;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -42,6 +46,8 @@ public class Home extends AppCompatActivity {
         goForward = (ImageButton) findViewById(R.id.goForward);
         webView = (WebView) findViewById(R.id.webView);
         enter = (Button) findViewById(R.id.enter);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setMax(100);
 
         if (savedInstanceState != null) {
             webView.restoreState(savedInstanceState);
@@ -60,6 +66,24 @@ public class Home extends AppCompatActivity {
         Intent intent = getIntent();
         text = intent.getStringExtra(MainActivity.Extra_Text);
         launchURL();
+
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                progressBar.setProgress(newProgress);
+                if (newProgress < 100 && progressBar.getVisibility() == ProgressBar.GONE) {
+                    progressBar.setVisibility(ProgressBar.VISIBLE);
+
+                }
+                if (newProgress == 100) {
+                    progressBar.setVisibility(ProgressBar.GONE);
+                }else{
+                    progressBar.setVisibility(ProgressBar.VISIBLE);
+                }
+            }
+        });
+
     }
     public void launchURL(){
 
@@ -95,8 +119,6 @@ public class Home extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
     public void goBack(View view){
         webView.goBack();
     }
