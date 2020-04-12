@@ -71,6 +71,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
+                urlField.setText(view.getUrl());
                 progressBar.setProgress(newProgress);
                 if (newProgress < 100 && progressBar.getVisibility() == ProgressBar.GONE) {
                     progressBar.setVisibility(ProgressBar.VISIBLE);
