@@ -7,10 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
+import android.net.http.SslCertificate;
+import android.net.http.SslError;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -21,7 +25,14 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.io.ByteArrayInputStream;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.Objects;
+
+import static android.net.http.SslCertificate.*;
 
 public class Home extends AppCompatActivity {
 
@@ -32,6 +43,7 @@ public class Home extends AppCompatActivity {
     Button enter;
     String text;
     ProgressBar progressBar;
+    ImageButton reload;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -48,6 +60,7 @@ public class Home extends AppCompatActivity {
         enter = (Button) findViewById(R.id.enter);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setMax(100);
+        reload = (ImageButton) findViewById(R.id.reload);
 
         if (savedInstanceState != null) {
             webView.restoreState(savedInstanceState);
@@ -59,6 +72,7 @@ public class Home extends AppCompatActivity {
             webView.getSettings().setSupportMultipleWindows(true);
             webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
             webView.setBackgroundColor(Color.WHITE);
+
 
         }
         webView.setWebViewClient(new Home.MyWebViewClient());
@@ -75,30 +89,31 @@ public class Home extends AppCompatActivity {
                 progressBar.setProgress(newProgress);
                 if (newProgress < 100 && progressBar.getVisibility() == ProgressBar.GONE) {
                     progressBar.setVisibility(ProgressBar.VISIBLE);
-
                 }
                 if (newProgress == 100) {
                     progressBar.setVisibility(ProgressBar.GONE);
-                }else{
+                    // String certificate = view.getCertificate().toString();
+                } else {
                     progressBar.setVisibility(ProgressBar.VISIBLE);
                 }
             }
         });
 
     }
-    public void launchURL(){
+    public void launchURL() {
 
         try {
-            if(!Home.NetworkState.connectionAvailable(Home.this)){
-            }else {
+            if (!Home.NetworkState.connectionAvailable(Home.this)) {
+            } else {
 
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(urlField.getWindowToken(), 0);
                 webView.loadUrl("https://" + text);
                 urlField.setText("");
+
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -107,8 +122,8 @@ public class Home extends AppCompatActivity {
     public void goTo(View v) {
 
         try {
-            if(!Home.NetworkState.connectionAvailable(Home.this)){
-            }else {
+            if (!Home.NetworkState.connectionAvailable(Home.this)) {
+            } else {
 
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(urlField.getWindowToken(), 0);
@@ -116,16 +131,9 @@ public class Home extends AppCompatActivity {
                 urlField.setText("");
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    public void goBack(View view){
-        webView.goBack();
-    }
-
-    public void goForward(View view){
-        webView.goForward();
     }
     public static class MyWebViewClient extends WebViewClient {
         @Override
@@ -137,13 +145,21 @@ public class Home extends AppCompatActivity {
     }
     public static class NetworkState {
 
-        static boolean connectionAvailable(Context context){
+        static boolean connectionAvailable(Context context) {
 
             ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             assert connectivityManager != null;
-            return connectivityManager.getActiveNetworkInfo() !=null;
+            return connectivityManager.getActiveNetworkInfo() != null;
         }
     }
+    public void goBack(View view) {
+        webView.goBack();
+    }
 
-
+    public void goForward(View view) {
+        webView.goForward();
+    }
+    public void reload(View view) {
+        webView.reload();
+    }
 }

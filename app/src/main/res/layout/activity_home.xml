@@ -89,4 +89,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/webView"
         app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/reload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="reload"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/goBack"
+        app:layout_constraintTop_toBottomOf="@+id/webView"
+        app:srcCompat="@drawable/ic_replay_black_24dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
