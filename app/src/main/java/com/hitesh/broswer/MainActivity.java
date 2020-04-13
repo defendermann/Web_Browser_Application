@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Objects.requireNonNull(this.getSupportActionBar()).hide();
+        //Objects.requireNonNull(this.getSupportActionBar()).hide();
 
         goToHome = (Button) findViewById(R.id.goToHome);
         urlTextFieldHome = (EditText) findViewById(R.id.urlTextFieldHome);

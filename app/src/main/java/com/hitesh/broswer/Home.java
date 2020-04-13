@@ -1,5 +1,6 @@
 package com.hitesh.broswer;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -11,6 +12,9 @@ import android.net.http.SslCertificate;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
@@ -22,6 +26,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -31,6 +36,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Objects;
+import java.util.zip.Inflater;
 
 import static android.net.http.SslCertificate.*;
 
@@ -50,7 +56,7 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Objects.requireNonNull(this.getSupportActionBar()).hide();
+        //Objects.requireNonNull(this.getSupportActionBar()).hide();
 
 
         urlField = (EditText) findViewById(R.id.urlField);
@@ -72,8 +78,6 @@ public class Home extends AppCompatActivity {
             webView.getSettings().setSupportMultipleWindows(true);
             webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
             webView.setBackgroundColor(Color.WHITE);
-
-
         }
         webView.setWebViewClient(new Home.MyWebViewClient());
 
@@ -161,5 +165,26 @@ public class Home extends AppCompatActivity {
     }
     public void reload(View view) {
         webView.reload();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.app_settings, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.history:
+                    openHistoryActivity();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    public void openHistoryActivity(){
+        Intent historyIntent = new Intent(this, History_activity.class);
+        startActivity(historyIntent);
+
     }
 }
