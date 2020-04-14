@@ -1,12 +1,12 @@
-name: Build
+name: Build CI
 
 on:
   pull_request:
     branches:
-      - 'master'
+      - 'production'
   push:
     branches:
-      - 'master'
+      - 'production'
 
 jobs:
   test:
