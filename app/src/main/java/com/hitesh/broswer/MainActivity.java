@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
        public void openHomeActivity(View view){
 
         String urlTextHome = urlTextFieldHome.getText().toString();
-        Intent intent = new Intent(this, Home.class);
-        intent.putExtra(Extra_Text, urlTextHome);
-        startActivity(intent);
+        Intent intent2 = new Intent(this, Home.class);
+        intent2.putExtra(Extra_Text, urlTextHome);
+        startActivity(intent2);
        }
 
 

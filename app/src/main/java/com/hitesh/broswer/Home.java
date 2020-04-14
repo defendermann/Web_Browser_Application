@@ -8,37 +8,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
-import android.net.http.SslCertificate;
-import android.net.http.SslError;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
-import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import java.io.ByteArrayInputStream;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.Objects;
-import java.util.zip.Inflater;
-
-import static android.net.http.SslCertificate.*;
 
 public class Home extends AppCompatActivity {
 
@@ -50,6 +34,7 @@ public class Home extends AppCompatActivity {
     String text;
     ProgressBar progressBar;
     ImageButton reload;
+    public static final String history_url = "com.hitesh.broswer.history_url";
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -93,6 +78,10 @@ public class Home extends AppCompatActivity {
                 progressBar.setProgress(newProgress);
                 if (newProgress < 100 && progressBar.getVisibility() == ProgressBar.GONE) {
                     progressBar.setVisibility(ProgressBar.VISIBLE);
+
+
+
+
                 }
                 if (newProgress == 100) {
                     progressBar.setVisibility(ProgressBar.GONE);
@@ -104,6 +93,7 @@ public class Home extends AppCompatActivity {
         });
 
     }
+
     public void launchURL() {
 
         try {
@@ -114,7 +104,6 @@ public class Home extends AppCompatActivity {
                 inputMethodManager.hideSoftInputFromWindow(urlField.getWindowToken(), 0);
                 webView.loadUrl("https://" + text);
                 urlField.setText("");
-
             }
 
         } catch (Exception e) {
@@ -139,6 +128,13 @@ public class Home extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    public void openH(MenuItem item) {
+            Intent intent2 = new Intent(this, History_activity.class);
+            intent2.putExtra(history_url, text);
+            startActivity(intent2);
+    }
+
     public static class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -187,4 +183,5 @@ public class Home extends AppCompatActivity {
         startActivity(historyIntent);
 
     }
+
 }

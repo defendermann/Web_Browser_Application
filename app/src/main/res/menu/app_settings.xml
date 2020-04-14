@@ -6,5 +6,6 @@
         android:id="@+id/history"
         android:title="history"
         app:showAsAction=""
+        android:onClick="openH"
         />
 </menu>
