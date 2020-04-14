@@ -174,6 +174,7 @@ public class Home extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.history:
                     openHistoryActivity();
+                    break;
         }
         return super.onOptionsItemSelected(item);
     }
