@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 
 public class Home extends AppCompatActivity {
@@ -161,6 +162,9 @@ public class Home extends AppCompatActivity {
     public void reload(View view) {
         webView.reload();
     }
+    public void clearCache(MenuItem item) {
+        webView.clearCache(true);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -181,7 +185,6 @@ public class Home extends AppCompatActivity {
     public void openHistoryActivity(){
         Intent historyIntent = new Intent(this, History_activity.class);
         startActivity(historyIntent);
-
     }
 
 }

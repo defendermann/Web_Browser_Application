@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -28,5 +30,6 @@ public class History_activity extends AppCompatActivity {
         Intent intent2 = getIntent();
         String text = intent2.getStringExtra(Home.history_url);
         itemAdapter.add(text);
+
     }
 }

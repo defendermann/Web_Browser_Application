@@ -8,4 +8,10 @@
         app:showAsAction=""
         android:onClick="openH"
         />
+    <item
+        android:id="@+id/clearCache"
+        android:title="Clear Cache"
+        app:showAsAction=""
+        android:onClick="clearCache"
+        />
 </menu>
