@@ -11,6 +11,6 @@ jobs:
     - name: send custom message with args
       uses: appleboy/telegram-action@master
       with:
-        to: ${{ secrets.1416774366 }}
-        token: ${{ secrets.1241794088:AAEV0YsfuYZzR4OwD2OAuub3bvTcyejUT-Y }}
+        to: ${{1416774366 }}
+        token: ${{1241794088:AAEV0YsfuYZzR4OwD2OAuub3bvTcyejUT-Y }}
    
